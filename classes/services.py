@@ -98,7 +98,7 @@ class ClassService:
 
         # Create a mapping between student ids from above and their names
         students_name_data = StudentService.filter_students(
-            filter={"_id": {"$in": list(student_ids)}}
+            filter_data={"_id": {"$in": list(student_ids)}}
         )
         students_name_dict = {}
         for student_name_data in students_name_data:
@@ -137,7 +137,7 @@ class ClassService:
 
         # Create a mapping between student ids from above and their names
         students_name_data = StudentService.filter_students(
-            filter={"_id": {"$in": list(student_classes_dict.keys())}}
+            filter_data={"_id": {"$in": list(student_classes_dict.keys())}}
         )
         students_name_dict = {}
         for student_data in students_name_data:
@@ -211,7 +211,7 @@ class ClassService:
 
         # Create a mapping between student ids from above and their names
         students_name_data = StudentService.filter_students(
-            filter={"_id": {"$in": list(new_student_details.keys())}}
+            filter_data={"_id": {"$in": list(new_student_details.keys())}}
         )
         students_name_dict = {}
         for student_data in students_name_data:
