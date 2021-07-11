@@ -27,7 +27,8 @@ class ClassService:
 
         return classes_data
 
-    def __map_class_students(self, class_student_data):
+    @staticmethod
+    def __map_class_students(class_student_data):
 
         """
         This service maps the student id with the marks and total_marks for a particular student
@@ -142,12 +143,12 @@ class ClassService:
         for student_data in students_name_data:
             students_name_dict[student_data["_id"]] = student_data["name"]
 
-        for student_id in student_classes_dict:
+        for student_id, value in student_classes_dict.items():
             class_data["students"].append(
                 {
                     "student_id": student_id,
                     "student_name": students_name_dict[student_id],
-                    "total_marks": student_classes_dict[student_id]["total_marks"],
+                    "total_marks": value["total_marks"],
                 }
             )
         return class_data
@@ -156,14 +157,16 @@ class ClassService:
         first_grade_range = total_students // 12
         second_grade_range = first_grade_range + (total_students // 6)
         third_grade_range = second_grade_range + (total_students // 4)
+
+        grade = "D"
         if 1 <= rank <= first_grade_range:
-            return "A"
+            grade = "A"
         elif (first_grade_range + 1) <= rank <= second_grade_range:
-            return "B"
+            grade = "B"
         elif (second_grade_range + 1) <= rank <= third_grade_range:
-            return "C"
-        else:
-            return "D"
+            grade =  "C"
+        
+        return grade
 
     def get_final_grades(self):
         """
@@ -214,13 +217,13 @@ class ClassService:
         for student_data in students_name_data:
             students_name_dict[student_data["_id"]] = student_data["name"]
 
-        for student_id in new_student_details:
+        for student_id, value in new_student_details.items():
             class_data["students"].append(
                 {
                     "student_id": student_id,
                     "student_name": students_name_dict[student_id],
-                    "details": new_student_details[student_id]["details"],
-                    "grade": new_student_details[student_id]["grade"],
+                    "details": value["details"],
+                    "grade": value["grade"],
                 }
             )
         return class_data

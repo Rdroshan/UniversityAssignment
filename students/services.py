@@ -1,5 +1,5 @@
-from clients import db
 from rest_framework.exceptions import ParseError
+from clients import db
 
 
 class StudentService:
@@ -30,10 +30,11 @@ class StudentService:
         return response
 
     @staticmethod
-    def filter_students(filter):
-        return db["students"].find(filter=filter)
+    def filter_students(filter_data):
+        return db["students"].find(filter=filter_data)
 
-    def __map_class_marks_of_student(self, student_class_data):
+    @staticmethod
+    def __map_class_marks_of_student(student_class_data):
 
         """
         This service maps the class id with the marks and total_marks for a particular student
@@ -145,11 +146,11 @@ class StudentService:
             student_class_data=list(student_class_data)
         )
 
-        for student_class_id in student_classes.keys():
+        for student_class_id, value in student_classes.items():
             student_data["classes"].append(
                 {
                     "class_id": student_class_id,
-                    "total_marks": student_classes[student_class_id]["total_marks"],
+                    "total_marks": value["total_marks"],
                 }
             )
         return student_data
@@ -187,8 +188,8 @@ class StudentService:
             student_class_data=list(student_class_data)
         )
 
-        for student_class_id in student_classes.keys():
-            student_data["marks"].extend(student_classes[student_class_id]["marks"])
+        for value in student_classes.values():
+            student_data["marks"].extend(value["marks"])
 
         return student_data
 

@@ -2,10 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 # import services
-from .services import ClassService
 from students.services import StudentService
-
-from clients import db
+from .services import ClassService
 
 
 @api_view(http_method_names=["GET"])
