@@ -19,11 +19,10 @@ class ClassService:
         ]
         """
 
-        classes_data = list(
-            db["grades"]
-            .find(filter={}, projection={"class_id": 1, "_id": 0})
-            .distinct("class_id")
-        )
+        class_ids = db["grades"].distinct("class_id")
+        classes_data = []
+        for class_id in class_ids:
+            classes_data.append({"class_id": class_id})
 
         return classes_data
 
@@ -164,8 +163,8 @@ class ClassService:
         elif (first_grade_range + 1) <= rank <= second_grade_range:
             grade = "B"
         elif (second_grade_range + 1) <= rank <= third_grade_range:
-            grade =  "C"
-        
+            grade = "C"
+
         return grade
 
     def get_final_grades(self):
