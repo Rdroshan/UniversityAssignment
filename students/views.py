@@ -1,11 +1,5 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.exceptions import ParseError
-from bson.json_util import dumps
-
-# import clients
-from clients import db
-
 
 # import serializers
 from .serializers import StudentSerializer

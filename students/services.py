@@ -1,4 +1,5 @@
 from clients import db
+from rest_framework.exceptions import ParseError
 
 
 class StudentService:
@@ -159,6 +160,8 @@ class StudentService:
 		}
 
 		student_class_data = db['grades'].find(filter={"student_id": self.student_id, "class_id": class_id})
+		if student_class_data.count() == 0:
+			raise ParseError(detail="No detail found for this student and it's corresponding class", code="not_found")
 		student_classes = self.map_class_marks_of_student(student_class_data=list(student_class_data))
 
 		for student_class_id in student_classes.keys():
