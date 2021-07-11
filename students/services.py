@@ -165,3 +165,11 @@ class StudentService:
 			student_data['marks'].extend(student_classes[student_class_id]['marks'])
 
 		return student_data
+
+
+
+def func_Q1(db):
+	return len(db['grades'].distinct("student_id"))
+
+def func_Q2(db):
+	return len(db['grades'].distinct("class_id"))
