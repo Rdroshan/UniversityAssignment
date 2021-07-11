@@ -7,9 +7,9 @@ def get_all_classes(request):
 	return
 
 @api_view(http_method_names=['GET'])
-def get_enrolled_students(request, pk):
+def get_class_students(request, pk):
 	"""
-	Gets all the students enrolled in a class
+	Gets all the students attended this class
 	"""
 	return
 
@@ -32,7 +32,7 @@ def get_final_grade_sheet(request, pk):
 
 
 @api_view(http_method_names=['GET'])
-def get_class_student_details(request, class_id, student_id):
+def get_student_class_details(request, class_id, student_id):
 	"""
 	Get marks obtained by a student in a particular class
 	"""
