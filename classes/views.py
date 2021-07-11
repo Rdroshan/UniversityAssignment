@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .services import ClassService
 from students.services import StudentService
 
+from clients import db
+
 @api_view(http_method_names=['GET'])
 def get_all_classes(request):
 	response = ClassService.get_all_classes()
@@ -14,10 +16,13 @@ def get_all_classes(request):
 @api_view(http_method_names=['GET'])
 def get_class_students(request, pk):
 	"""
-	Gets all the students attended this class
+	Get all students taking a course
 	"""
+	class_id = int(pk)
+	class_service = ClassService(class_id=class_id)
+	response = class_service.get_class_data()
 
-	return
+	return Response(response)
 
 
 @api_view(http_method_names=['GET'])
@@ -25,7 +30,10 @@ def get_class_performance(request, pk):
 	"""
 	
 	"""
-	return
+	class_id = int(pk)
+	class_service = ClassService(class_id=class_id)
+	response = class_service.get_class_performance()
+	return Response(response)
 
 
 @api_view(http_method_names=['GET'])
@@ -33,8 +41,11 @@ def get_final_grade_sheet(request, pk):
 	"""
 	Grade sheet of students for a class
 	"""
+	class_id = int(pk)
+	class_service = ClassService(class_id=class_id)
+	response = class_service.get_final_grades()
 
-	return
+	return Response(response)
 
 
 @api_view(http_method_names=['GET'])

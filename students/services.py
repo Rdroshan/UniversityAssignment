@@ -24,6 +24,10 @@ class StudentService:
 			response.append({"student_id": student_data['_id'], "student_name": student_data['name']})
 		return response
 
+	@staticmethod
+	def filter_students(filter):
+		return db['students'].find(filter=filter)
+
 	def __map_class_marks_of_student(self, student_class_data):
 
 		"""
@@ -44,8 +48,10 @@ class StudentService:
 		{
 			<class_id>: {
 				"marks": [
-					"type": str,
-					"marks": float
+					{
+						"type": str,
+						"marks": float
+					}
 				],
 				"total_marks": float
 			}
@@ -63,7 +69,7 @@ class StudentService:
 						"type": score['type'],
 						"marks": score['score']
 					})
-			if student_classes.get('class_id', {}).get('total_marks', 0) < total_score:
+			if student_classes.get(class_data['class_id'], {}).get('total_marks', 0) < total_score:
 				student_classes[class_data['class_id']] = {
 					"marks": new_score_data,
 					"total_marks": total_score
