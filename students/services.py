@@ -24,8 +24,7 @@ class StudentService:
 			response.append({"student_id": student_data['_id'], "student_name": student_data['name']})
 		return response
 
-	@staticmethod
-	def map_class_marks_of_student(student_class_data):
+	def __map_class_marks_of_student(self, student_class_data):
 
 		"""
 		This service maps the class id with the marks and total_marks for a particular student
@@ -129,7 +128,7 @@ class StudentService:
 			"classes": []
 		}
 
-		student_classes = self.map_class_marks_of_student(student_class_data=list(student_class_data))
+		student_classes = self.__map_class_marks_of_student(student_class_data=list(student_class_data))
 
 		for student_class_id in student_classes.keys():
 			student_data['classes'].append({
@@ -162,7 +161,7 @@ class StudentService:
 		student_class_data = db['grades'].find(filter={"student_id": self.student_id, "class_id": class_id})
 		if student_class_data.count() == 0:
 			raise ParseError(detail="No detail found for this student and it's corresponding class", code="not_found")
-		student_classes = self.map_class_marks_of_student(student_class_data=list(student_class_data))
+		student_classes = self.__map_class_marks_of_student(student_class_data=list(student_class_data))
 
 		for student_class_id in student_classes.keys():
 			student_data['marks'].extend(student_classes[student_class_id]['marks'])
